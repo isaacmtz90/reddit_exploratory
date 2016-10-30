@@ -1,0 +1,14 @@
+SELECT comms.link_id, comms.author, comms.subreddit, comms.score, comms.body, psts.title, psts.selftext
+FROM
+      (select link_id, author, subreddit, score,body
+      from [fh-bigquery:reddit_comments.2016_08],
+      [fh-bigquery:reddit_comments.2016_07],
+      [fh-bigquery:reddit_comments.2016_06]  )as comms
+JOIN
+      (select id, selftext,name, title
+      from [fh-bigquery:reddit_posts.2016_06],
+      [fh-bigquery:reddit_posts.2016_07],
+       [fh-bigquery:reddit_posts.2016_08]) as psts
+on comms.link_id = psts.name
+
+ WHERE comms.subreddit IN ('travel', 'SoloTravel', 'Shoestring', 'IWantOut' ) and comms.author NOT IN ('[deleted]', 'AutoModerator') and  score > 5
