@@ -38,7 +38,9 @@ finder = BigramCollocationFinder.from_words(text)
 finder.apply_freq_filter(3)
 print finder.nbest(bigram_measures.pmi, 5)
 print text_original.concordance("food")
-# print text.collocations(4)
+# print text.word_similarity_dict(0)
 print fdlist.most_common(50)
 with open('viet.txt', 'a') as the_file:
      the_file.write(str(" ".join(text.tokens)))
+
+savefig('disp_viet.png', text.dispersion_plot(['food','visa','scooter','hotel']))
